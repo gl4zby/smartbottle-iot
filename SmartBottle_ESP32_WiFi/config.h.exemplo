@@ -22,7 +22,6 @@ const char* WIFI_PASSWORD = "PASSWORD_DA_TUA_REDE";
 // Para descobrir o IP:
 //   - Windows: abrir cmd e escrever "ipconfig"
 //   - Procurar "IPv4 Address" da rede ativa
-//   - Exemplo: 192.168.43.100 (hotspot) ou 192.168.0.100 (casa)
 const char* API_URL = "http://192.168.0.100:5000/api/consumo";
 
 // Chave da API (deve ser a mesma que esta no ficheiro .env da API)
