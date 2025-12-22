@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SmartBottle</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>SmartBottle</h1>
+                <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="profile.html">Perfil</a></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <section class="dashboard-section">
+                <h2>Bem-vindo ao Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Consumo Hoje</h3>
+                        <p id="daily-consumption">0 L</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Cafes Hoje</h3>
+                        <p id="cafes-hoje">0 cafes</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Media Semanal</h3>
+                        <p id="weekly-average">0 L</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Dias Consecutivos</h3>
+                        <p id="streak">0 dias</p>
+                    </div>
+                </div>
+
+                <!-- Barra de Progresso do Objetivo Diario -->
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h3>Objetivo Diario</h3>
+                        <span id="goal-text">Objetivo: 2.0 L</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0%</span>
+                </div>
+
+                <!-- Grafico Semanal -->
+                <div class="chart-container">
+                    <h3>Consumo Semanal</h3>
+                    <canvas id="consumption-chart" width="600" height="300"></canvas>
+                </div>
+                <div class="history-container">
+                    <h3>Historico de Hoje</h3>
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Tipo</th>
+                                <th>Quantidade</th>
+                                <th>Acoes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <tr><td colspan="4">A carregar...</td></tr>
+                        </tbody>
+                    </table>
+                    <!-- Modal para Editar Consumo -->
+                    <div id="edit-modal" class="modal" style="display:none;">
+                        <div class="modal-content">
+                            <h3>Editar Registo</h3>
+                            <input type="hidden" id="edit-consumo-id">
+                            <label for="edit-quantidade">Quantidade (ml):</label>
+                            <input type="number" id="edit-quantidade" min="1" step="1">
+                            <label for="edit-tipo">Tipo:</label>
+                            <select id="edit-tipo">
+                                <option value="Agua">Agua</option>
+                                <option value="Cafe">Cafe</option>
+                                <option value="Cha">Cha</option>
+                            </select>
+                            <div class="modal-buttons">
+                                <button class="btn btn-secondary" id="btn-cancel-edit">Cancelar</button>
+                                <button class="btn btn-primary" id="btn-save-edit">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary" id="btn-atualizar">Atualizar Dados</button>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SmartBottle. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/dashboard.js"></script>
+</body>
+</html>

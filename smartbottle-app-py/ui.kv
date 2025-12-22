@@ -1,0 +1,1130 @@
+#:kivy 2.2.0
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+# ============================================
+# Paleta de Cores Material Design
+# ============================================
+#:set color_primary (0.129, 0.588, 0.953, 1)     # #2196F3 - Azul Material 500
+#:set color_primary_dark (0.098, 0.463, 0.824, 1) # #1976D2 - Azul Material 700
+#:set color_secondary (0.012, 0.663, 0.957, 1)   # #03A9F4 - Azul Claro 500
+#:set color_accent (0.298, 0.686, 0.314, 1)      # #4CAF50 - Verde 500
+#:set color_bg (0.98, 0.98, 0.98, 1)             # #FAFAFA - Fundo
+#:set color_surface (1, 1, 1, 1)                 # #FFFFFF - Superficie
+#:set color_text_primary (0.129, 0.129, 0.129, 0.87)  # rgba(33,33,33,0.87)
+#:set color_text_secondary (0.459, 0.459, 0.459, 0.87) # rgba(117,117,117,0.87)
+#:set color_error (0.957, 0.263, 0.212, 1)       # #F44336 - Vermelho
+
+# ============================================
+# Componentes Personalizados com Elevacao Material
+# ============================================
+<Header@BoxLayout>:
+    size_hint_y: None
+    height: "64dp"
+    padding: 16, 12
+    spacing: 12
+    canvas.before:
+        # Sombra (nivel de elevacao 2)
+        Color:
+            rgba: 0, 0, 0, 0.08
+        Rectangle:
+            pos: self.x, self.y - 4
+            size: self.width, 4
+        # Superficie do cabecalho
+        Color:
+            rgba: color_primary
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    # PLACEHOLDER DE ICONE: Adicionar icone de definicoes no futuro
+    Label:
+        text: root.title if hasattr(root, "title") else "SmartBottle"
+        color: 1, 1, 1, 1
+        bold: True
+        font_size: "20sp"
+
+<PrimaryButton@Button>:
+    background_color: 0, 0, 0, 0
+    background_normal: ''
+    size_hint_y: None
+    height: "48dp"
+    canvas.before:
+        # Sombra Nivel 1 (inferior)
+        Color:
+            rgba: 0, 0, 0, 0.05
+        RoundedRectangle:
+            pos: self.x + 1, self.y - 3
+            size: self.size
+            radius: [8]
+        # Sombra Nivel 2 (meio)
+        Color:
+            rgba: 0, 0, 0, 0.04
+        RoundedRectangle:
+            pos: self.x + 1, self.y - 2
+            size: self.size
+            radius: [8]
+        # Superficie do botao
+        Color:
+            rgba: color_primary
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [8]
+    color: 1, 1, 1, 1
+    font_size: "14sp"
+    bold: True
+
+<SecondaryButton@Button>:
+    background_color: 0, 0, 0, 0
+    background_normal: ''
+    size_hint_y: None
+    height: "48dp"
+    canvas.before:
+        # Sombra subtil
+        Color:
+            rgba: 0, 0, 0, 0.03
+        RoundedRectangle:
+            pos: self.x + 1, self.y - 2
+            size: self.size
+            radius: [8]
+        # Superficie
+        Color:
+            rgba: 0.96, 0.96, 0.96, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [8]
+    color: color_text_primary
+    font_size: "14sp"
+    bold: True
+
+<StyledTextInput@TextInput>:
+    background_color: 1, 1, 1, 1  # Branco puro
+    foreground_color: 0, 0, 0, 1  # Preto puro para melhor contraste
+    color: 0, 0, 0, 1  # Cor do texto explicita - preto
+    hint_text_color: 0.4, 0.4, 0.4, 1  # Texto de dica cinzento (nao muito claro)
+    selection_color: color_primary  # Selecao azul
+    cursor_color: color_primary
+    size_hint_y: None
+    height: "48dp"
+    padding: 12, 14
+    font_size: "16sp"
+    bold: False
+    multiline: False
+    canvas.before:
+        Color:
+            rgba: 0.7, 0.7, 0.7, 1  # Borda mais escura para visibilidade
+        Line:
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 4)
+            width: 2
+
+<ElevatedCard@BoxLayout>:
+    # Card reutilizavel com elevacao
+    orientation: "vertical"
+    padding: 16
+    canvas.before:
+        # Camada de Sombra 1
+        Color:
+            rgba: 0, 0, 0, 0.06
+        RoundedRectangle:
+            pos: self.x + 2, self.y - 4
+            size: self.size
+            radius: [12]
+        # Camada de Sombra 2
+        Color:
+            rgba: 0, 0, 0, 0.04
+        RoundedRectangle:
+            pos: self.x + 1, self.y - 2
+            size: self.size
+            radius: [12]
+        # Superficie do Card
+        Color:
+            rgba: color_surface
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12]
+
+# ============================================
+# ECRAS
+# ============================================
+<LoginScreen>:
+    name: "login"
+    canvas.before:
+        Color:
+            rgba: color_bg
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Header:
+            title: "Entrar"
+        BoxLayout:
+            orientation: "vertical"
+            padding: 24
+            spacing: 16
+            Widget:
+                size_hint_y: None
+                height: "20dp"
+            StyledTextInput:
+                id: email
+                hint_text: "Email"
+            StyledTextInput:
+                id: password
+                hint_text: "Password"
+                password: True
+            Widget:
+                size_hint_y: None
+                height: "8dp"
+            PrimaryButton:
+                text: "ENTRAR"
+                on_release: root.do_login()
+            SecondaryButton:
+                text: "CRIAR CONTA"
+                on_release: app.root.current = "register"
+            SecondaryButton:
+                text: "CONFIGURAR SERVIDOR"
+                on_release: root.show_server_config()
+            Label:
+                id: lbl_error_login
+                text: root.error
+                color: color_error
+                size_hint_y: None
+                height: "24dp"
+                font_size: "14sp"
+            Label:
+                id: lbl_server_info
+                text: root.server_info
+                color: color_text_secondary
+                size_hint_y: None
+                height: "20dp"
+                font_size: "11sp"
+            Widget:
+
+<RegisterScreen>:
+    name: "register"
+    canvas.before:
+        Color:
+            rgba: color_bg
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Header:
+            title: "Registo"
+        BoxLayout:
+            orientation: "vertical"
+            padding: 24
+            spacing: 16
+            Widget:
+                size_hint_y: None
+                height: "20dp"
+            StyledTextInput:
+                id: nome
+                hint_text: "Nome"
+            StyledTextInput:
+                id: reg_email
+                hint_text: "Email"
+            StyledTextInput:
+                id: reg_password
+                hint_text: "Password"
+                password: True
+            Widget:
+                size_hint_y: None
+                height: "8dp"
+            PrimaryButton:
+                text: "CRIAR CONTA"
+                on_release: root.do_register()
+            SecondaryButton:
+                text: "JÁ TENHO CONTA"
+                on_release: app.root.current = "login"
+            Label:
+                text: root.success
+                color: color_accent
+                size_hint_y: None
+                height: "24dp"
+                font_size: "14sp"
+            Label:
+                text: root.error
+                color: color_error
+                size_hint_y: None
+                height: "24dp"
+                font_size: "14sp"
+            Widget:
+
+<DashboardScreen>:
+    name: "dashboard"
+    canvas.before:
+        Color:
+            rgba: color_bg
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Header:
+            title: "Dashboard"
+        BoxLayout:
+            orientation: "vertical"
+            padding: 20
+            spacing: 12
+
+            # Card de Boas-vindas com Elevacao
+            ElevatedCard:
+                size_hint_y: None
+                height: "120dp"
+                # PLACEHOLDER DE ICONE: Icone de utilizador/avatar
+                Label:
+                    text: root.welcome
+                    font_size: "18sp"
+                    bold: True
+                    color: color_text_primary
+                    size_hint_y: None
+                    height: "28dp"
+                # PLACEHOLDER DE ICONE: Icone de gota de agua
+                Label:
+                    text: "Consumo hoje: " + ("{:.1f} L".format(root.total_hoje))
+                    font_size: "28sp"
+                    bold: False
+                    color: color_primary
+                    size_hint_y: None
+                    height: "36dp"
+                # Contador de cafes
+                Label:
+                    text: str(root.cafes_hoje) + (" cafe" if root.cafes_hoje == 1 else " cafes") + " hoje"
+                    font_size: "14sp"
+                    bold: True
+                    color: (0.4, 0.2, 0.0, 1)
+                    size_hint_y: None
+                    height: "24dp"
+
+            # Card de Barra de Progresso com Elevacao
+            ElevatedCard:
+                size_hint_y: None
+                height: "100dp"
+                Label:
+                    text: "OBJETIVO DIARIO: " + "{:.1f} L".format(root.daily_goal / 1000.0)
+                    font_size: "12sp"
+                    bold: True
+                    color: color_text_secondary
+                    size_hint_y: None
+                    height: "20dp"
+                # Barra de progresso com melhor estilo
+                FloatLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    # Trilha de fundo (mais clara, mais fina)
+                    Widget:
+                        size_hint: 1, None
+                        height: "24dp"
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        canvas.before:
+                            Color:
+                                rgba: 0.93, 0.93, 0.93, 1
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [12]
+                    # Barra ativa (colorida, arredondada)
+                    Widget:
+                        size_hint: min(root.progress_percent / 100.0, 1.0), None
+                        height: "24dp"
+                        pos_hint: {"x": 0, "center_y": 0.5}
+                        canvas.before:
+                            Color:
+                                rgba: root.progress_color
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [12]
+                    # Sobreposicao de percentagem centrada - diretamente no FloatLayout
+                    Label:
+                        text: root.progress_text
+                        font_size: "14sp"
+                        bold: True
+                        color: color_text_primary
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        size_hint: None, None
+                        size: self.texture_size
+
+            # Card de Estatisticas (Media Semanal e Sequencia)
+            ElevatedCard:
+                size_hint_y: None
+                height: "80dp"
+                orientation: "horizontal"
+                spacing: 8
+                # Media Semanal
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_x: 0.5
+                    Label:
+                        text: "MÉDIA SEMANAL"
+                        font_size: "11sp"
+                        bold: True
+                        color: color_text_secondary
+                        size_hint_y: None
+                        height: "18dp"
+                    Label:
+                        text: "{:.1f} L".format(root.weekly_average)
+                        font_size: "22sp"
+                        bold: False
+                        color: color_secondary
+                        size_hint_y: None
+                        height: "32dp"
+                # Divisor
+                Widget:
+                    size_hint_x: None
+                    width: "1dp"
+                    canvas.before:
+                        Color:
+                            rgba: 0.9, 0.9, 0.9, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                # Sequencia
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_x: 0.5
+                    Label:
+                        text: "DIAS CONSECUTIVOS"
+                        font_size: "11sp"
+                        bold: True
+                        color: color_text_secondary
+                        size_hint_y: None
+                        height: "18dp"
+                    Label:
+                        text: "{} {}".format(root.streak, "dia" if root.streak == 1 else "dias")
+                        font_size: "22sp"
+                        bold: False
+                        color: color_accent
+                        size_hint_y: None
+                        height: "32dp"
+
+            # Botoes de Acao Rapida
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: "56dp"
+                spacing: 12
+                PrimaryButton:
+                    text: "+ ADICIONAR"
+                    on_release: app.root.current = "add"
+                PrimaryButton:
+                    text: "GRAFICO"
+                    on_release: app.root.current = "grafico"
+                PrimaryButton:
+                    text: "DEFINICOES"
+                    on_release: app.root.current = "settings"
+
+            # Cabecalho da Seccao de Historico com Botao de Atualizar
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: "48dp"
+                spacing: 8
+                Label:
+                    text: "HISTÓRICO"
+                    font_size: "14sp"
+                    bold: True
+                    color: color_text_secondary
+                    halign: "left"
+                    valign: "center"
+                    text_size: self.size
+                PrimaryButton:
+                    id: btn_refresh
+                    text: "ATUALIZAR"
+                    size_hint_x: None
+                    width: "120dp"
+                    height: "36dp"
+                    on_release: root.refresh_data()
+
+            Label:
+                id: lbl_error
+                text: root.status_msg
+                color: color_primary if "Atualizado" in root.status_msg else color_error
+                size_hint_y: None
+                height: "24dp"
+                font_size: "14sp"
+                bold: True
+
+            # Lista de Historico com Scroll
+            ScrollView:
+                GridLayout:
+                    id: list_hist
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: "64dp"
+                    row_force_default: True
+                    padding: 0
+                    spacing: 8
+
+<AddConsumptionScreen>:
+    name: "add"
+    canvas.before:
+        Color:
+            rgba: color_bg
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Header:
+            title: "Adicionar Consumo"
+        BoxLayout:
+            orientation: "vertical"
+            padding: 24
+            spacing: 16
+            Widget:
+                size_hint_y: None
+                height: "12dp"
+
+            # Titulo da Seccao de Adicao Rapida
+            Label:
+                text: "ATALHOS RÁPIDOS"
+                font_size: "12sp"
+                bold: True
+                color: color_text_secondary
+                size_hint_y: None
+                height: "24dp"
+
+            # Grelha de Botoes de Adicao Rapida
+            GridLayout:
+                cols: 2
+                size_hint_y: None
+                height: "140dp"
+                spacing: 12
+                row_default_height: "64dp"
+                row_force_default: True
+
+                # Botao 250ml
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "64dp"
+                    padding: 8
+                    canvas.before:
+                        # Sombra
+                        Color:
+                            rgba: 0, 0, 0, 0.04
+                        RoundedRectangle:
+                            pos: self.x + 1, self.y - 2
+                            size: self.size
+                            radius: [8]
+                        # Superficie (acento Azul Claro)
+                        Color:
+                            rgba: color_secondary
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [8]
+                    Button:
+                        text: "250ml\nCopo"
+                        font_size: "18sp"
+                        bold: True
+                        background_color: 0, 0, 0, 0
+                        background_normal: ''
+                        color: 1, 1, 1, 1
+                        on_release: root.quick_add(250)
+
+                # Botao 500ml
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "64dp"
+                    padding: 8
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.04
+                        RoundedRectangle:
+                            pos: self.x + 1, self.y - 2
+                            size: self.size
+                            radius: [8]
+                        Color:
+                            rgba: color_primary
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [8]
+                    Button:
+                        text: "500ml\nGarrafa Pequena"
+                        font_size: "16sp"
+                        bold: True
+                        background_color: 0, 0, 0, 0
+                        background_normal: ''
+                        color: 1, 1, 1, 1
+                        on_release: root.quick_add(500)
+
+                # Botao 750ml
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "64dp"
+                    padding: 8
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.04
+                        RoundedRectangle:
+                            pos: self.x + 1, self.y - 2
+                            size: self.size
+                            radius: [8]
+                        Color:
+                            rgba: color_accent
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [8]
+                    Button:
+                        text: "750ml\nGarrafa Média"
+                        font_size: "16sp"
+                        bold: True
+                        background_color: 0, 0, 0, 0
+                        background_normal: ''
+                        color: 1, 1, 1, 1
+                        on_release: root.quick_add(750)
+
+                # Botao 1000ml (1L)
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "64dp"
+                    padding: 8
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.04
+                        RoundedRectangle:
+                            pos: self.x + 1, self.y - 2
+                            size: self.size
+                            radius: [8]
+                        Color:
+                            rgba: (0.4, 0.23, 0.72, 1)  # Roxo
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [8]
+                    Button:
+                        text: "1000ml\nGarrafa Grande"
+                        font_size: "16sp"
+                        bold: True
+                        background_color: 0, 0, 0, 0
+                        background_normal: ''
+                        color: 1, 1, 1, 1
+                        on_release: root.quick_add(1000)
+
+            Widget:
+                size_hint_y: None
+                height: "8dp"
+
+            # Titulo da Seccao de Entrada Manual
+            Label:
+                text: "OU ADICIONAR MANUALMENTE"
+                font_size: "12sp"
+                bold: True
+                color: color_text_secondary
+                size_hint_y: None
+                height: "24dp"
+
+            StyledTextInput:
+                id: quantidade
+                hint_text: "Quantidade (ml)"
+                text: "250"
+                input_filter: "int"
+            Spinner:
+                id: tipo
+                text: "Água"
+                values: ["Água", "Café", "Chá"]
+                size_hint_y: None
+                height: "48dp"
+                background_color: 1, 1, 1, 1
+                background_normal: ''
+                color: 0, 0, 0, 1
+                font_size: "16sp"
+                canvas.before:
+                    Color:
+                        rgba: 0.7, 0.7, 0.7, 1
+                    Line:
+                        rounded_rectangle: (self.x, self.y, self.width, self.height, 4)
+                        width: 2
+            Widget:
+                size_hint_y: None
+                height: "8dp"
+            PrimaryButton:
+                text: "GUARDAR"
+                on_release: root.save()
+            SecondaryButton:
+                text: "VOLTAR"
+                on_release: app.root.current = "dashboard"
+            Label:
+                text: root.success
+                color: color_accent
+                size_hint_y: None
+                height: "24dp"
+                font_size: "14sp"
+            Label:
+                text: root.error
+                color: color_error
+                size_hint_y: None
+                height: "24dp"
+                font_size: "14sp"
+            Widget:
+
+<SettingsScreen>:
+    name: "settings"
+    canvas.before:
+        Color:
+            rgba: color_bg
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Header:
+            title: "Definicoes"
+        ScrollView:
+            BoxLayout:
+                orientation: "vertical"
+                padding: 24
+                spacing: 12
+                size_hint_y: None
+                height: self.minimum_height
+
+                # Seccao de Perfil
+                Label:
+                    text: "PERFIL"
+                    size_hint_y: None
+                    height: "28dp"
+                    font_size: "14sp"
+                    bold: True
+                    color: color_text_secondary
+
+                StyledTextInput:
+                    id: nome_input
+                    hint_text: "Nome"
+                    text: root.current_nome
+                    size_hint_y: None
+                    height: "48dp"
+
+                StyledTextInput:
+                    id: idade_input
+                    hint_text: "Idade"
+                    text: root.current_idade
+                    input_filter: "int"
+                    size_hint_y: None
+                    height: "48dp"
+
+                StyledTextInput:
+                    id: peso_input
+                    hint_text: "Peso (kg)"
+                    text: root.current_peso
+                    size_hint_y: None
+                    height: "48dp"
+
+                StyledTextInput:
+                    id: daily_goal_input
+                    hint_text: "Meta Diaria (ml)"
+                    text: root.current_goal
+                    input_filter: "int"
+                    size_hint_y: None
+                    height: "48dp"
+
+                Widget:
+                    size_hint_y: None
+                    height: "16dp"
+
+                # Seccao da API
+                Label:
+                    text: "CONFIGURACAO API"
+                    size_hint_y: None
+                    height: "28dp"
+                    font_size: "14sp"
+                    bold: True
+                    color: color_text_secondary
+
+                Label:
+                    text: "Atual: " + root.current_url
+                    size_hint_y: None
+                    height: "24dp"
+                    font_size: "13sp"
+                    color: color_text_secondary
+
+                StyledTextInput:
+                    id: api_url_input
+                    hint_text: "http://192.168.1.100:5000"
+                    text: root.current_url
+                    size_hint_y: None
+                    height: "48dp"
+
+                Widget:
+                    size_hint_y: None
+                    height: "8dp"
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    spacing: 12
+                    SecondaryButton:
+                        text: "TESTAR"
+                        on_release: root.test_connection()
+                    PrimaryButton:
+                        text: "GUARDAR"
+                        on_release: root.save_settings()
+
+                Label:
+                    text: root.connection_status
+                    size_hint_y: None
+                    height: "24dp"
+                    font_size: "14sp"
+                    bold: True
+                    color: color_primary
+
+                Label:
+                    text: root.success
+                    color: color_accent
+                    size_hint_y: None
+                    height: "24dp"
+                    font_size: "14sp"
+
+                Label:
+                    text: root.error
+                    color: color_error
+                    size_hint_y: None
+                    height: "24dp"
+                    font_size: "14sp"
+
+                SecondaryButton:
+                    text: "VOLTAR AO DASHBOARD"
+                    on_release: app.root.current = "dashboard"
+                    size_hint_y: None
+                    height: "48dp"
+
+                Widget:
+                    size_hint_y: None
+                    height: "20dp"
+
+<GraficoScreen>:
+    name: "grafico"
+    canvas.before:
+        Color:
+            rgba: color_bg
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Header:
+            title: "Gráfico Semanal"
+
+        BoxLayout:
+            orientation: "vertical"
+            padding: 12, 8
+            spacing: 8
+
+            # Card do Grafico
+            ElevatedCard:
+                size_hint_y: None
+                height: "400dp"
+                orientation: "vertical"
+                padding: 20, 16
+                spacing: 8
+
+                # Area de Tela do Grafico
+                FloatLayout:
+                    id: chart_area
+                    size_hint_y: 1
+
+                    # Etiqueta do Eixo Y (lado esquerdo)
+                    Label:
+                        text: "Litros"
+                        font_size: "12sp"
+                        bold: True
+                        color: color_text_secondary
+                        size_hint: None, None
+                        size: "40dp", "20dp"
+                        pos_hint: {"x": 0, "top": 1}
+
+                    # Widget de desenho do grafico
+                    Widget:
+                        id: chart_widget
+                        pos_hint: {"x": 0.08, "y": 0.15}
+                        size_hint: 0.88, 0.75
+
+                        canvas.before:
+                            # Linhas de grelha (horizontal)
+                            Color:
+                                rgba: 0.9, 0.9, 0.9, 1
+                            Line:
+                                points: [self.x, self.y, self.x + self.width, self.y]
+                                width: 1
+                            Line:
+                                points: [self.x, self.y + self.height * 0.33, self.x + self.width, self.y + self.height * 0.33]
+                                width: 1
+                            Line:
+                                points: [self.x, self.y + self.height * 0.67, self.x + self.width, self.y + self.height * 0.67]
+                                width: 1
+                            Line:
+                                points: [self.x, self.y + self.height, self.x + self.width, self.y + self.height]
+                                width: 1
+
+                        canvas:
+                            # BARRA 0
+                            Color:
+                                rgba: color_primary
+                            Rectangle:
+                                pos: self.x + (self.width * 0.07), self.y
+                                size: self.width * 0.10, self.height * (root.chart_data[0] / root.max_value if root.max_value > 0 else 0)
+
+                            # BARRA 1
+                            Color:
+                                rgba: color_primary
+                            Rectangle:
+                                pos: self.x + (self.width * 0.21), self.y
+                                size: self.width * 0.10, self.height * (root.chart_data[1] / root.max_value if root.max_value > 0 else 0)
+
+                            # BARRA 2
+                            Color:
+                                rgba: color_primary
+                            Rectangle:
+                                pos: self.x + (self.width * 0.35), self.y
+                                size: self.width * 0.10, self.height * (root.chart_data[2] / root.max_value if root.max_value > 0 else 0)
+
+                            # BARRA 3
+                            Color:
+                                rgba: color_primary
+                            Rectangle:
+                                pos: self.x + (self.width * 0.49), self.y
+                                size: self.width * 0.10, self.height * (root.chart_data[3] / root.max_value if root.max_value > 0 else 0)
+
+                            # BARRA 4
+                            Color:
+                                rgba: color_primary
+                            Rectangle:
+                                pos: self.x + (self.width * 0.63), self.y
+                                size: self.width * 0.10, self.height * (root.chart_data[4] / root.max_value if root.max_value > 0 else 0)
+
+                            # BARRA 5
+                            Color:
+                                rgba: color_primary
+                            Rectangle:
+                                pos: self.x + (self.width * 0.77), self.y
+                                size: self.width * 0.10, self.height * (root.chart_data[5] / root.max_value if root.max_value > 0 else 0)
+
+                            # BARRA 6 (hoje - destacada)
+                            Color:
+                                rgba: color_accent
+                            Rectangle:
+                                pos: self.x + (self.width * 0.91), self.y
+                                size: self.width * 0.10, self.height * (root.chart_data[6] / root.max_value if root.max_value > 0 else 0)
+
+                    # Etiquetas de valores acima das barras (posicionadas dinamicamente acima de cada barra)
+                    # Etiqueta para Barra 0
+                    Label:
+                        text: "{:.1f}L".format(root.chart_data[0]) if root.chart_data[0] > 0 else ""
+                        font_size: "9sp"
+                        bold: True
+                        color: color_text_primary
+                        size_hint: None, None
+                        size: "40dp", "16dp"
+                        pos_hint: {"center_x": 0.19, "y": 0.15 + (0.75 * min(root.chart_data[0] / root.max_value if root.max_value > 0 else 0, 1.0)) + 0.02}
+
+                    # Etiqueta para Barra 1
+                    Label:
+                        text: "{:.1f}L".format(root.chart_data[1]) if root.chart_data[1] > 0 else ""
+                        font_size: "9sp"
+                        bold: True
+                        color: color_text_primary
+                        size_hint: None, None
+                        size: "40dp", "16dp"
+                        pos_hint: {"center_x": 0.31, "y": 0.15 + (0.75 * min(root.chart_data[1] / root.max_value if root.max_value > 0 else 0, 1.0)) + 0.02}
+
+                    # Etiqueta para Barra 2
+                    Label:
+                        text: "{:.1f}L".format(root.chart_data[2]) if root.chart_data[2] > 0 else ""
+                        font_size: "9sp"
+                        bold: True
+                        color: color_text_primary
+                        size_hint: None, None
+                        size: "40dp", "16dp"
+                        pos_hint: {"center_x": 0.43, "y": 0.15 + (0.75 * min(root.chart_data[2] / root.max_value if root.max_value > 0 else 0, 1.0)) + 0.02}
+
+                    # Etiqueta para Barra 3
+                    Label:
+                        text: "{:.1f}L".format(root.chart_data[3]) if root.chart_data[3] > 0 else ""
+                        font_size: "9sp"
+                        bold: True
+                        color: color_text_primary
+                        size_hint: None, None
+                        size: "40dp", "16dp"
+                        pos_hint: {"center_x": 0.56, "y": 0.15 + (0.75 * min(root.chart_data[3] / root.max_value if root.max_value > 0 else 0, 1.0)) + 0.02}
+
+                    # Etiqueta para Barra 4
+                    Label:
+                        text: "{:.1f}L".format(root.chart_data[4]) if root.chart_data[4] > 0 else ""
+                        font_size: "9sp"
+                        bold: True
+                        color: color_text_primary
+                        size_hint: None, None
+                        size: "40dp", "16dp"
+                        pos_hint: {"center_x": 0.68, "y": 0.15 + (0.75 * min(root.chart_data[4] / root.max_value if root.max_value > 0 else 0, 1.0)) + 0.02}
+
+                    # Etiqueta para Barra 5
+                    Label:
+                        text: "{:.1f}L".format(root.chart_data[5]) if root.chart_data[5] > 0 else ""
+                        font_size: "9sp"
+                        bold: True
+                        color: color_text_primary
+                        size_hint: None, None
+                        size: "40dp", "16dp"
+                        pos_hint: {"center_x": 0.80, "y": 0.15 + (0.75 * min(root.chart_data[5] / root.max_value if root.max_value > 0 else 0, 1.0)) + 0.02}
+
+                    # Etiqueta para Barra 6 (hoje - destacada)
+                    Label:
+                        text: "{:.1f}L".format(root.chart_data[6]) if root.chart_data[6] > 0 else ""
+                        font_size: "9sp"
+                        bold: True
+                        color: color_accent
+                        size_hint: None, None
+                        size: "40dp", "16dp"
+                        pos_hint: {"center_x": 0.92, "y": 0.15 + (0.75 * min(root.chart_data[6] / root.max_value if root.max_value > 0 else 0, 1.0)) + 0.02}
+
+                    # Etiquetas do Eixo X (nomes dos dias)
+                    BoxLayout:
+                        orientation: "horizontal"
+                        size_hint: 0.88, None
+                        height: "30dp"
+                        pos_hint: {"x": 0.08, "y": 0.05}
+                        spacing: 0
+
+                        Label:
+                            text: root.day_labels[0]
+                            font_size: "11sp"
+                            color: color_text_secondary
+                        Label:
+                            text: root.day_labels[1]
+                            font_size: "11sp"
+                            color: color_text_secondary
+                        Label:
+                            text: root.day_labels[2]
+                            font_size: "11sp"
+                            color: color_text_secondary
+                        Label:
+                            text: root.day_labels[3]
+                            font_size: "11sp"
+                            color: color_text_secondary
+                        Label:
+                            text: root.day_labels[4]
+                            font_size: "11sp"
+                            color: color_text_secondary
+                        Label:
+                            text: root.day_labels[5]
+                            font_size: "11sp"
+                            color: color_text_secondary
+                        Label:
+                            text: root.day_labels[6]
+                            font_size: "11sp"
+                            bold: True
+                            color: color_accent
+
+                    # Etiquetas de escala do Eixo Y
+                    Label:
+                        text: "{:.1f}L".format(root.max_value)
+                        font_size: "10sp"
+                        color: color_text_secondary
+                        size_hint: None, None
+                        size: "50dp", "20dp"
+                        pos_hint: {"x": 0, "top": 0.92}
+                        halign: "right"
+
+                    Label:
+                        text: "{:.1f}L".format(root.max_value * 0.67)
+                        font_size: "10sp"
+                        color: color_text_secondary
+                        size_hint: None, None
+                        size: "50dp", "20dp"
+                        pos_hint: {"x": 0, "y": 0.6}
+                        halign: "right"
+
+                    Label:
+                        text: "{:.1f}L".format(root.max_value * 0.33)
+                        font_size: "10sp"
+                        color: color_text_secondary
+                        size_hint: None, None
+                        size: "50dp", "20dp"
+                        pos_hint: {"x": 0, "y": 0.35}
+                        halign: "right"
+
+                    Label:
+                        text: "0.0L"
+                        font_size: "10sp"
+                        color: color_text_secondary
+                        size_hint: None, None
+                        size: "50dp", "20dp"
+                        pos_hint: {"x": 0, "y": 0.1}
+                        halign: "right"
+
+            # Legenda
+            ElevatedCard:
+                size_hint_y: None
+                height: "60dp"
+                orientation: "horizontal"
+                spacing: 16
+
+                # Legenda da barra azul
+                BoxLayout:
+                    size_hint_x: 0.5
+                    spacing: 8
+                    Widget:
+                        size_hint_x: None
+                        width: "24dp"
+                        canvas.before:
+                            Color:
+                                rgba: color_primary
+                            Rectangle:
+                                pos: self.x, self.center_y - 6
+                                size: 24, 12
+                    Label:
+                        text: "Dias anteriores"
+                        font_size: "12sp"
+                        color: color_text_secondary
+                        halign: "left"
+                        text_size: self.size
+
+                # Legenda da barra verde
+                BoxLayout:
+                    size_hint_x: 0.5
+                    spacing: 8
+                    Widget:
+                        size_hint_x: None
+                        width: "24dp"
+                        canvas.before:
+                            Color:
+                                rgba: color_accent
+                            Rectangle:
+                                pos: self.x, self.center_y - 6
+                                size: 24, 12
+                    Label:
+                        text: "Hoje"
+                        font_size: "12sp"
+                        color: color_text_secondary
+                        halign: "left"
+                        text_size: self.size
+
+            # Botao voltar
+            SecondaryButton:
+                size_hint_y: None
+                height: "48dp"
+                text: "VOLTAR AO DASHBOARD"
+                on_release: app.root.current = "dashboard"
+
+# ============================================
+# Gestor de Ecras ROOT
+# ============================================
+Router:
+    transition: SlideTransition()
+    LoginScreen:
+    RegisterScreen:
+    DashboardScreen:
+    AddConsumptionScreen:
+    SettingsScreen:
+    GraficoScreen:

@@ -1,0 +1,43 @@
+# Dependencias
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+.venv-kivy/
+venv/
+
+# Ficheiros de ambiente (contem passwords)
+.env
+*.log
+
+# Configuracao ESP32 (contem WiFi password e API key)
+SmartBottle_ESP32_WiFi/config.h
+
+# IDE e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+*.apk
+*.aab
+bin/
+build/
+.buildozer/
+
+# Temporarios
+*.tmp
+*.temp
+*.zip
+
+# Claude/AI
+.claude/
+
+# Documentos internos (nao publicar)
+SETUP_HOTSPOT.md
+APRESENTACAO.md

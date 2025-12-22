@@ -1,0 +1,39 @@
+// ====== SmartBottle - Configuracao (TEMPLATE) ======
+//
+// INSTRUCOES:
+// 1. Copiar este ficheiro e renomear para "config.h"
+// 2. Preencher com as tuas credenciais reais
+// 3. NUNCA fazer commit do ficheiro "config.h"!
+//
+// Este ficheiro .example serve como template e pode ser commitado
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+// ==================== WIFI ====================
+// Alterar para o nome da tua rede WiFi (ou hotspot do telemovel)
+const char* WIFI_SSID = "NOME_DA_TUA_REDE";
+
+// Alterar para a password da tua rede WiFi
+const char* WIFI_PASSWORD = "PASSWORD_DA_TUA_REDE";
+
+// ==================== API ====================
+// Alterar para o IP do computador onde a API esta a correr
+// Para descobrir o IP:
+//   - Windows: abrir cmd e escrever "ipconfig"
+//   - Procurar "IPv4 Address" da rede ativa
+//   - Exemplo: 192.168.43.100 (hotspot) ou 192.168.0.100 (casa)
+const char* API_URL = "http://192.168.0.100:5000/api/consumo";
+
+// Chave da API (deve ser a mesma que esta no ficheiro .env da API)
+const char* API_KEY = "SmartBottle_API_Key_2025_SecureAccess_9f8e7d6c5b4a3";
+
+// ==================== UTILIZADOR ====================
+// ID do utilizador na base de dados
+// Alterar para o teu userId (podes ver na tabela utilizadores)
+const int USER_ID = 5;
+
+// Tipo de bebida por defeito
+const char* TIPO_BEBIDA = "Agua";
+
+#endif
