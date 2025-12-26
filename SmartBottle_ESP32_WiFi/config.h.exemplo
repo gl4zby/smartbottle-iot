@@ -22,7 +22,7 @@ const char* WIFI_PASSWORD = "PASSWORD_DA_TUA_REDE";
 // Para descobrir o IP:
 //   - Windows: abrir cmd e escrever "ipconfig"
 //   - Procurar "IPv4 Address" da rede ativa
-const char* API_URL = "http://192.168.0.100:5000/api/consumo";
+const char* API_URL = "http://192.X.X.XXX/api/consumo";
 
 // Chave da API (deve ser a mesma que esta no ficheiro .env da API)
 const char* API_KEY = "SmartBottle_API_Key_2025_SecureAccess_9f8e7d6c5b4a3";
